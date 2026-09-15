@@ -1,10 +1,28 @@
+import msvcrt
 balance = 10000 
 history = []
-pin = "1234"
+correct_pin = "1234"
 access_granted = False
+def get_pin():
+        pin = ""
+        print(" PIN giriniz: ", end="", flush = True)
+
+        while True:
+            key = msvcrt.getch()
+            if key == b"\r":
+                print()
+                break
+            if key == b"\x08":
+                if len(pin) > 0:
+                       pin = pin[:-1]
+                       print("\b \b", end="", flush=True)
+                continue
+            pin += key.decode()
+            print("*", end="", flush = True)
+        return pin
 for attempt in range (1,4):
-    attempted_pin = input("PIN giriniz: ")
-    if attempted_pin == pin:
+    entered_pin = get_pin()
+    if entered_pin  == correct_pin:
         print("Giriş yaptınız.")
         access_granted = True
         break
